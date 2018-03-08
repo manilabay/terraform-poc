@@ -1,10 +1,7 @@
 aws_region = "us-east-1"
 
-aws_key_name = ""
-aws_key_path = ""
-
-aws_instance_user = ""
-aws_instance_type = ""
+aws_instance_user = "ubuntu"
+aws_instance_type = "t2.nano"
 
 aws_security_group.sg_count = "2"
 
