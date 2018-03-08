@@ -19,3 +19,22 @@ resource "aws_security_group" "default" {
         Name = "SG-TERRAFORM"
     }
 }
+
+resource "aws_elb" "web" {
+    name = "ELB-NGINX-TERRAFORM-POC"
+
+    listener {
+        instance_port       = 80
+        instance_protocol   = "http"
+        lb_port             = 80
+        lb_protocol         = "http"
+    }
+
+    availability_zones = [
+        "${aws_instance.web.*.availability_zone}"
+    ]
+
+    instances = [
+        "${aws_instance.web.*.id}",
+    ]
+}
