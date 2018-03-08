@@ -38,3 +38,30 @@ resource "aws_elb" "web" {
         "${aws_instance.web.*.id}",
     ]
 }
+
+resource "aws_instance" "web" {
+    count = 3
+
+    instance_type = "${var.aws_instance_type}"
+    ami = "${lookup(var.aws_amis, var.aws_region)}"
+    availability_zone = "${lookup(var.aws_availability_zones, count.index)}"
+
+    key_name = "${var.aws_key_name}"
+    security_groups = [ "${aws_security_group.default.*.name}" ]
+    associate_public_ip_address = true
+
+    connection {
+        user = "${var.aws_instance_user}"
+        key_file = "${var.aws_key_path}"
+    }
+
+    provisioner "file" {
+        source = "files/"
+        destination = "/tmp/"
+    }
+
+
+    tags {
+        Name = "NGINX-TERRAFORM-POC-${count.index}"
+    }
+}
