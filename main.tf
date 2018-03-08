@@ -60,6 +60,16 @@ resource "aws_instance" "web" {
         destination = "/tmp/"
     }
 
+    provisioner "remote-exec" {
+        inline = [
+            "sudo yum install -y docker",
+            "sudo service docker start",
+            "sudo docker pull nginx",
+            "sudo docker run -d -p 80:80 -v /tmp:/usr/share/nginx/html --name nginx_${count.index} nginx",
+            "sudo sed -iE \"s/{{ hostname }}/`hostname`/g\" /tmp/index.html",
+            "sudo sed -iE \"s/{{ container_name }}/nginx_${count.index}/g\" /tmp/index.html"
+        ]
+    }
 
     tags {
         Name = "NGINX-TERRAFORM-POC-${count.index}"
