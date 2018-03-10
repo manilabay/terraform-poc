@@ -4,17 +4,25 @@ A simple PoC using Terraform to create 2 AWS EC2 instances running Docker with c
 
 You need export AWS env variables before run thir terraform PoC
 
-  $ export AWS_ACCESS_KEY_ID="your-accesskey"
-  $ export AWS_SECRET_ACCESS_KEY="your-secretkey"
+```console
+$ export AWS_ACCESS_KEY_ID="your-accesskey"
+$ export AWS_SECRET_ACCESS_KEY="your-secretkey"
+```
 
 To check what recurses will be created:
 
-	$ terraform plan
+```console
+$ terraform plan
+```
 
 To create EC2 instances and their dependencies:
 
-	$ terraform apply
+```console
+$ terraform apply
+```
 
 To destroy all:
 
-	$ terraform destroy
+```console
+$ terraform destroy
+```
